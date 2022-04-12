@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  jupyter:
+    build: .
+    ports:
+      - 8888:8888
+    volumes:
+      - .:/usr/src
+    command: jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token='' --NotebookApp.password=''
+
+  cache:
+    image: redis:7.0-rc-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - cache:/data
+volumes:
+  cache:
+    driver: local
